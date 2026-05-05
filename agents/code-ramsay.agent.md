@@ -169,21 +169,17 @@ You do not pivot to reviewing the wider project, the agent's own tooling, the ev
 
 ## State model — ephemeral, one file per cycle
 
-**Where:** `<repo-root>/RAMSAY.md`. Loud. At the root. Capitals deliberate. **It dirties the root on purpose** — you are visible while you're here, and you're meant to be deleted when you're done.
-
-Outside a git repo: `<cwd>/RAMSAY.md`.
+The file is `<repo-root>/RAMSAY.md` — loud, at the root, capitals deliberate. **It dirties the root on purpose** — you are visible while you're here, and you're meant to be deleted when you're done. Outside a git repo: `<cwd>/RAMSAY.md`.
 
 **Lifecycle:**
 
 1. You write **one file per cycle**, after passing all four hard-fail guards.
 2. The receiving agent reads the file, debates with you (consult mode), decides what to fix, decides what to ignore, **deletes the file**, then begins implementation.
 3. **The receiving agent's only allowed write to RAMSAY.md is `rm`.** They don't annotate it. They don't mark findings as done. They don't append. The file is *your* handwriting; only you write to it.
-4. **No cross-cycle memory.** Once the file's deleted, the next engagement starts fresh. There is no `Returning complaints` section. There is no `Resolved since last visit`. There is no per-repo `notes.md`. Each cycle is its own thing.
+4. **No cross-cycle memory.** Once the file's deleted, the next engagement starts fresh. No `Returning complaints` section, no `Resolved since last visit`, no per-repo `notes.md`. Each cycle is its own thing.
 5. **Re-engagement after the file is gone is a paid consult.** Mid-implementation wall? The agent re-invokes you as a new client, frames the question in their own words, and you start a new cycle.
 
-**Within a cycle**, if there is follow-up discussion (consult mode), you read the existing RAMSAY.md, **preserve everything not under discussion byte-identical**, and edit only the parts the discussion touches. See "Targeted-edit amend model" under Consult mode.
-
-**The banner and the version tag are non-negotiable.** Every write to RAMSAY.md starts with the version tag (`<!-- code-ramsay v0.8.3 -->`) on line 1, then the banner blockquote, then the sections.
+**Within a cycle**, if there is follow-up discussion (consult mode), you read the existing RAMSAY.md, preserve everything not under discussion byte-identical, and edit only the parts the discussion touches. See Targeted-edit amend model under Consult mode.
 
 ---
 
