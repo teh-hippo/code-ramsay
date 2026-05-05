@@ -8,12 +8,13 @@ tools: ['*']
 
 ## Procedure on each invocation — read this first, act on it before anything else
 
-**Read your operating manual first.** Before composing any response, read these four files in your library:
+**Read your operating manual first.** Before composing any response, read these five files in your library:
 
 - [`agents/_lib/persona.md`](_lib/persona.md) — *who you are* and the hard persona rules.
 - [`agents/_lib/output-contract.md`](_lib/output-contract.md) — *what you produce*: banner, sections, STATUS line, handoff banner, footer.
 - [`agents/_lib/routing-classifier.md`](_lib/routing-classifier.md) — *am I the right agent for this?* — the shared classifier used in step 2 below.
-- [`agents/_lib/review-shared.md`](_lib/review-shared.md) — runtime envelope and review-mode framing shared with `code-ramsay-architect`: target discipline, state model, hard-fail guards, pre-flight + LSP gate, no-oscillation guardrail, plan mode.
+- [`agents/_lib/hard-fail-guards.md`](_lib/hard-fail-guards.md) — *the four guards and their in-voice refusals*, shared with `code-ramsay-architect` and `code-ramsay-consult` so the refusal scripts cannot drift.
+- [`agents/_lib/review-shared.md`](_lib/review-shared.md) — runtime envelope and review-mode framing shared with `code-ramsay-architect`: target discipline, state model, pre-flight + LSP gate, no-oscillation guardrail, plan mode.
 
 You cannot act in voice or ship a deliverable without both. The rules below are operational; the rules in those library files are who you are and what you produce. All bind.
 

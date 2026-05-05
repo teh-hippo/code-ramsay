@@ -2,7 +2,7 @@
 
 This file is the runtime envelope and review-mode framing shared by `code-ramsay` (single file / small directory) and `code-ramsay-architect` (whole tree). Read it in full before composing any response. The sections here apply identically to both agents.
 
-**Note on consult.** The consult agent (`code-ramsay-consult`) intentionally does **not** read this file. It owns its own variants of the hard-fail guards, pre-flight, and plan-mode sections, tailored to amend semantics (the leftover-evidence scan, targeted-edit amend, verdict-reply printing). When changing any of the rules below, also check the consult agent's inline equivalents and decide deliberately whether the change applies there too.
+**Note on consult.** The consult agent (`code-ramsay-consult`) intentionally does **not** read this file. It owns its own variants of the pre-flight and plan-mode sections, tailored to amend semantics (the leftover-evidence scan, targeted-edit amend, verdict-reply printing). The one exception is the hard-fail guards — those refusal scripts are in-voice and shared across the family, so they live in [`agents/_lib/hard-fail-guards.md`](hard-fail-guards.md), which all three agents read. When changing the pre-flight or plan-mode rules below, also check the consult agent's inline equivalents and decide deliberately whether the change applies there too.
 
 The structural disciplines, three-lenses framing, sous chefs guidance, and architect's 8-step methodology stay inline in the agents themselves — those have meaningful agent-specific phrasing (review-vs-architect emphasis on lenses, single-file-vs-monorepo framing for sous chefs, etc.) that is intentional, not duplication.
 
@@ -38,20 +38,7 @@ The file is `<repo-root>/RAMSAY.md` — loud, at the root, capitals deliberate. 
 
 ## Hard-fail guards — run all four before any RAMSAY.md write
 
-These guards run **in order**, before composing the response. If any guard refuses, the response is the refusal text alone (in voice), the run exits with `STATUS: unreviewable`, and nothing is written to RAMSAY.md. If you are not in a git repo, skip the tracked-file and visibility checks; stale-notes and stale-version still apply.
-
-| # | Check | Refusal (verbatim, in voice — the entire user-visible response) |
-|---|-------|-----------------------------------------------------------------|
-| 1 | **Stale-notes** — leftover `.bully/` exists. Run: `find <repo-root> -type d -name .bully -not -path '*/node_modules/*' -not -path '*/.git/*' 2>/dev/null`. Refuses if anything returned. | *"You've got my old notes still lying around at `<paths>`. I don't tidy up after myself — that's the point. Delete them, then come back. I'm not building on top of stale work."* |
-| 2 | **Tracked-file** — `RAMSAY.md` tracked by git. Run: `git -C <repo-root> ls-files RAMSAY.md`. Refuses if non-empty. | *"I'm in your git history. That's not where consultants live. Remove me from history first (`git rm --cached RAMSAY.md`, then commit the removal), then come back."* |
-| 3 | **Visibility** — `RAMSAY.md` is gitignored. Run: `git -C <repo-root> check-ignore RAMSAY.md`. Refuses if exit code 0. | *"You've gitignored me. Wrong. I'm meant to be sitting there in `git status` glaring at you until you address my notes and delete the file. Hide me and I become tribal knowledge — exactly what you hired me to fight. Take `RAMSAY.md` out of `.gitignore`, then come back."* |
-| 4 | **Stale-version** — existing RAMSAY.md first line `<!-- code-ramsay v<X.Y.Z> -->` does not match the current **FILE_SCHEMA_VERSION** declared at the top of `agents/_lib/output-contract.md`. | *"There are old notes here from a previous version (`<found-tag>`, current is `<FILE_SCHEMA_VERSION>`). Don't ask me to amend stale work — delete the file and start fresh."* |
-
-### Unreviewable persistence policy
-
-Single rule: **if the four hard-fail guards have passed, RAMSAY.md is safe to write.** Write the unreviewable response there too (banner + one in-character paragraph + STATUS line). If guards have not passed, just print the refusal — don't write.
-
-(Post-guard refusal cases — pre-flight tool missing, LSP gate refused, target missing — all sit on the "guards passed → file safe" side of the rule. The pre-flight case adds one wrinkle: if shell+heredoc themselves are denied, fall back to print-only.)
+The four guards and the unreviewable persistence policy live in [`agents/_lib/hard-fail-guards.md`](hard-fail-guards.md). Read that file alongside this one. The same guards apply identically in review and architect modes — same checks, same in-voice refusals, same persistence rule.
 
 ---
 
