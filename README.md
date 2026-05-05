@@ -18,7 +18,7 @@ The plugin ships three agents that share one persona, one output contract, and o
 | `@code-ramsay-architect` | Whole tree, package, or monorepo | You want a repository-wide structural review (e.g. `.`, a service tree, a workspace root). Runs a per-unit pass and prints a unit map alongside the findings. |
 | `@code-ramsay-consult` | A prior finding | You've proposed a fix and want a verdict on whether it actually addresses one of his findings. **Requires an existing `RAMSAY.md` from the current cycle.** |
 
-The shared persona, output contract, routing classifier, and review-mode envelope live in `agents/_lib/`. Each agent reads them at invocation time, so a change to the shared material takes effect across the family without per-agent edits.
+The shared persona, output contract, routing classifier, and review-mode envelope live in `agents/_lib/`. They are the single source of truth at edit time. Each agent's source under `agents/` is a thin shell that lists which lib files it depends on. Before distribution, `scripts/render-agents.py` inlines the lib content into each agent shell and writes self-contained agent files into `dist/`. The plugin (and any user-scoped install) ships from `dist/`, not from `agents/`, so the agents work no matter where the user's `cwd` is when they invoke them.
 
 ## What he actually does
 
@@ -36,7 +36,7 @@ The shared persona, output contract, routing classifier, and review-mode envelop
 copilot plugin install teh-hippo/code-ramsay
 ```
 
-The plugin auto-discovers all three agents from `agents/`. Restart your Copilot CLI session and they're available as `@code-ramsay`, `@code-ramsay-architect`, and `@code-ramsay-consult`.
+The plugin ships pre-rendered agents from `dist/`. Restart your Copilot CLI session and they're available as `@code-ramsay`, `@code-ramsay-architect`, and `@code-ramsay-consult`.
 
 For local development against an in-progress checkout, see the [Development](#development) section.
 
@@ -150,10 +150,17 @@ See `eval/README.md` for layout, design, and the baseline-recording flow.
 
 When iterating on agent prompts locally, **plugin installs are cached.** Editing files under `agents/` in your clone does not propagate to the installed plugin at `~/.copilot/installed-plugins/_direct/teh-hippo--code-ramsay/`. Copilot CLI keeps using the cached copy until you explicitly refresh.
 
+After editing anything under `agents/` (including a `_lib/` file), re-render before any local test:
+
+```sh
+python3 scripts/render-agents.py        # writes dist/*.agent.md
+python3 scripts/render-agents.py --check # CI: exit non-zero if dist/ is stale
+```
+
 Three workflows for active development:
 
-1. **Re-install on every change.** `copilot plugin uninstall code-ramsay && copilot plugin install /path/to/local/clone` (works against your local checkout, not the remote).
-2. **Override via personal agents.** Drop the work-in-progress agent files (and matching `_lib/` files if you've changed those) into `~/.copilot/agents/`. Copilot CLI prefers user-scoped agents over plugin-scoped, so your edits win immediately. Remove them when you're done.
+1. **Re-install on every change.** `copilot plugin uninstall code-ramsay && copilot plugin install /path/to/local/clone` (works against your local checkout, not the remote). Re-render first so `dist/` is current.
+2. **Override via personal agents.** After re-rendering, `cp dist/*.agent.md ~/.copilot/agents/`. Copilot CLI prefers user-scoped agents over plugin-scoped, so your edits win immediately. Remove them when you're done.
 3. **Pull from remote.** `copilot plugin update code-ramsay` after pushing, for testing what others will see.
 
 Run `./scripts/check-pii.sh` before any push. It greps for known leakage patterns (developer paths, prior-fixture names, etc.) and exits non-zero if it finds anything.

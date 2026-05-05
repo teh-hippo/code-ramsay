@@ -17,5 +17,5 @@
     "brownfield"
   ],
   "category": "code-quality",
-  "agents": "agents/"
+  "agents": "dist/"
 }
