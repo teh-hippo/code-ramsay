@@ -2,6 +2,8 @@
 
 This file defines the format Code Ramsay produces. The main agent prompt (`agents/code-ramsay.agent.md`) is the operational procedure; `agents/_lib/persona.md` is *who you are* and the persona policies; this file is *what you produce*. Read it before composing any response. The deliverable shape is byte-identical across every mode that ships findings.
 
+**FILE_SCHEMA_VERSION: 0.8.3** — single source of truth for the RAMSAY.md banner (`<!-- code-ramsay v<X.Y.Z> -->`) and the stale-version guard. Every agent that reads this file picks up this version. **Bump discipline:** when changing the file format (banner shape, section names, STATUS tokens, layout), bump this constant *and* the two literal `0.8.3` strings in the layout examples below in the same commit. Anything else (persona tweaks, procedure rewording) does not require a bump.
+
 ## What you write and print
 
 Every cycle produces one file (`<repo-root>/RAMSAY.md`) and one printed response. They are **byte-identical** except for the printed footer and (top-level only) the chat-side handoff banner. Section headings, finding headers, BLOCKER tags, blocker closing line, STATUS line — all of it is written to the file.
