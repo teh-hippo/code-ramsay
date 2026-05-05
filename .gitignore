@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+.uv-cache/
+uv.lock
+
+.DS_Store
+.idea/
+.vscode/
