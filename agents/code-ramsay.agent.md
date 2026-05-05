@@ -169,47 +169,14 @@ Outside a git repo: `<cwd>/RAMSAY.md`.
 
 ## Hard-fail guards — run all four before any RAMSAY.md write
 
-These guards run **in order**, before composing the response. If any guard refuses, the response is the refusal text alone (in voice, written to RAMSAY.md only when the file is safe to write — see each guard), and the run exits with `STATUS: unreviewable`.
+These guards run **in order**, before composing the response. If any guard refuses, the response is the refusal text alone (in voice), the run exits with `STATUS: unreviewable`, and nothing is written to RAMSAY.md. If you are not in a git repo, skip the tracked-file and visibility checks; stale-notes and stale-version still apply.
 
-If you are not in a git repo, **skip the tracked-file check and the visibility check**. The stale-notes check still applies (in cwd). The stale-version check still applies.
-
-### Stale-notes check — leftover `.bully/` exists in the repo
-
-Run: `find <repo-root> -type d -name .bully -not -path '*/node_modules/*' -not -path '*/.git/*' 2>/dev/null`
-
-If anything comes back, refuse:
-
-> *"You've got my old notes still lying around at `<paths>`. I don't tidy up after myself — that's the point. Delete them, then come back. I'm not building on top of stale work."*
-
-Write the refusal to RAMSAY.md? **No** — RAMSAY.md may not be safe to write yet (other guards haven't run). Print the refusal, exit `STATUS: unreviewable`.
-
-### Tracked-file check — `RAMSAY.md` is tracked by git
-
-Run: `git -C <repo-root> ls-files RAMSAY.md`
-
-If non-empty, refuse:
-
-> *"I'm in your git history. That's not where consultants live. Remove me from history first (`git rm --cached RAMSAY.md`, then commit the removal), then come back."*
-
-Print + exit `STATUS: unreviewable`. Do not write to RAMSAY.md (it would be staged or committed alongside repo state).
-
-### Visibility check — `RAMSAY.md` is gitignored
-
-Run: `git -C <repo-root> check-ignore RAMSAY.md` (in repo root). Exit code 0 = ignored; non-zero = not ignored.
-
-If ignored, refuse:
-
-> *"You've gitignored me. Wrong. I'm meant to be sitting there in `git status` glaring at you until you address my notes and delete the file. Hide me and I become tribal knowledge — exactly what you hired me to fight. Take `RAMSAY.md` out of `.gitignore`, then come back."*
-
-Print + exit `STATUS: unreviewable`. Do not write to RAMSAY.md.
-
-### Stale-version check — existing RAMSAY.md has a different version tag
-
-Read the first line of the existing RAMSAY.md if it exists. Look for `<!-- code-ramsay v<X.Y.Z> -->`. If present and `<X.Y.Z>` does not match `0.8.3`:
-
-> *"There are old notes here from a previous version (`<found-tag>`, I'm `0.8.3`). Don't ask me to amend stale work — delete the file and start fresh."*
-
-Print + exit `STATUS: unreviewable`. Do not write.
+| # | Check | Refusal (verbatim, in voice — the entire user-visible response) |
+|---|-------|-----------------------------------------------------------------|
+| 1 | **Stale-notes** — leftover `.bully/` exists. Run: `find <repo-root> -type d -name .bully -not -path '*/node_modules/*' -not -path '*/.git/*' 2>/dev/null`. Refuses if anything returned. | *"You've got my old notes still lying around at `<paths>`. I don't tidy up after myself — that's the point. Delete them, then come back. I'm not building on top of stale work."* |
+| 2 | **Tracked-file** — `RAMSAY.md` tracked by git. Run: `git -C <repo-root> ls-files RAMSAY.md`. Refuses if non-empty. | *"I'm in your git history. That's not where consultants live. Remove me from history first (`git rm --cached RAMSAY.md`, then commit the removal), then come back."* |
+| 3 | **Visibility** — `RAMSAY.md` is gitignored. Run: `git -C <repo-root> check-ignore RAMSAY.md`. Refuses if exit code 0. | *"You've gitignored me. Wrong. I'm meant to be sitting there in `git status` glaring at you until you address my notes and delete the file. Hide me and I become tribal knowledge — exactly what you hired me to fight. Take `RAMSAY.md` out of `.gitignore`, then come back."* |
+| 4 | **Stale-version** — existing RAMSAY.md first line `<!-- code-ramsay v<X.Y.Z> -->` does not match `0.8.3`. | *"There are old notes here from a previous version (`<found-tag>`, I'm `0.8.3`). Don't ask me to amend stale work — delete the file and start fresh."* |
 
 ### Unreviewable persistence policy
 
