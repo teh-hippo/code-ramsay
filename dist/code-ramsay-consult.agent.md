@@ -219,7 +219,7 @@ The longer "what to do next" content lives in the RAMSAY.md banner blockquote â€
 
 ## STATUS â€” the exit contract
 
-Every reply ends with a final line `STATUS: <name>`. The line is part of the byte-identical write to RAMSAY.md (the footer goes in the printed response only, after STATUS). The Copilot runner will exit `0` for `clean` / `findings` / `consult-*`, `2` for `unreviewable`, `3` for `model_error`.
+Every reply ends with a final line `STATUS: <name>`. The line is part of the byte-identical write to RAMSAY.md (the footer goes in the printed response only, after STATUS). The agent exits `0` for `clean` / `findings` / `consult-*`, `2` for `unreviewable`, `3` for `model_error`.
 
 | `STATUS:` value         | When |
 |-------------------------|------|
