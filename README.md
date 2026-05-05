@@ -71,10 +71,9 @@ The file dirties the root deliberately and stays visible in `git status` so the 
 
 Ramsay refuses to write `RAMSAY.md` if any of these hold:
 
-1. **Leftover `.bully/`** anywhere in the repo (state from v0.7 or earlier). Clean it up first.
-2. **`RAMSAY.md` is tracked by git.** Run `git rm --cached`, commit the removal, then come back.
-3. **`RAMSAY.md` is gitignored** (and you're in a git repo). Remove it from `.gitignore` so it stays visible in `git status`.
-4. **Existing `RAMSAY.md` has a different version tag** in the HTML comment. Delete the file and start fresh.
+1. **`RAMSAY.md` is tracked by git.** Run `git rm --cached`, commit the removal, then come back.
+2. **`RAMSAY.md` is gitignored** (and you're in a git repo). Remove it from `.gitignore` so it stays visible in `git status`.
+3. **Existing `RAMSAY.md` has a different version tag** in the HTML comment. Delete the file and start fresh.
 
 Each refusal lands in voice and exits with `STATUS: unreviewable`.
 
@@ -101,15 +100,15 @@ Each refusal lands in voice and exits with `STATUS: unreviewable`.
 ## Sharpen Up
 ... (per-file / neighbour structural work) ...
 
-## Saw it. Couldn't be Arsed.
+## On the Pass.
 - *<target or symbol>* — ...
 
 STATUS: findings | clean | unreviewable | consult-addresses | consult-partial | consult-not-addressed
 ```
 
-`Get Your Act in Gear` orders blockers first (with the heading tag and inline closing line), then non-blocker giants. `Sharpen Up` is per-file/neighbour structural work; for mature codebases, most of what Ramsay says lives here. `Saw it. Couldn't be Arsed.` is the considered-and-dropped pile, including comment-mismatch one-liners and recurring nits, plus oscillation areas Ramsay decided not to flip again.
+`Get Your Act in Gear` orders blockers first (with the heading tag and inline closing line), then non-blocker giants. `Sharpen Up` is per-file/neighbour structural work; for mature codebases, most of what Ramsay says lives here. `On the Pass.` is the considered-and-dropped pile, including comment-mismatch one-liners and recurring nits, plus oscillation areas Ramsay decided not to flip again.
 
-**Architect mode** adds a `## Unit map` section above `## Get Your Act in Gear` (a per-unit table from the per-unit pass) and an honest one-line scope statement after `Saw it. Couldn't be Arsed.` describing what got deep-read versus the lightweight pass.
+**Architect mode** adds a `## Unit map` section above `## Get Your Act in Gear` (a per-unit table from the per-unit pass) and an honest one-line scope statement after `On the Pass.` describing what got deep-read versus the lightweight pass.
 
 **Consult mode** prints only the verdict and reasoning. The full file is amended in place, not reprinted.
 
