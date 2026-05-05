@@ -7,7 +7,6 @@
 #   - /home/sena      (developer home path leak from baselines)
 #   - /tmp/ramsay-    (workroot leak from baseline captures)
 #   - michaelsena     (developer username leak)
-#   - copilot-plugins/ (path from prior dotfiles-nested layout)
 #
 # Excludes the eval virtualenv and pyc caches; otherwise everything tracked
 # (or trackable) by git is in scope.
@@ -22,7 +21,6 @@ PATTERNS=(
     "/home/sena"
     "/tmp/ramsay-"
     "michaelsena"
-    "copilot-plugins/"
 )
 
 EXCLUDE_DIRS=(

@@ -55,7 +55,7 @@ The receiving agent reads the file at `<repo-root>/RAMSAY.md`, debates with Rams
 
 ### Programmatic
 
-The agent prompts contain a `{{target}}` placeholder for the path under review. Raw GitHub Copilot CLI does not support an `--input` flag, so programmatic invocation needs to substitute `{{target}}` before invoking. See `eval/src/ramsay_eval/runner.py` for the substitution pattern the eval suite uses (it writes a project-scoped temp agent with the placeholder replaced, then invokes from inside the target directory).
+The agent prompts contain a `{{target}}` placeholder for the path under review. Raw GitHub Copilot CLI does not support an `--input` flag, so programmatic invocation needs to substitute `{{target}}` before invoking — typically by writing a project-scoped temp agent (under `<target>/.github/agents/`) with the placeholder replaced, then invoking from inside the target directory.
 
 ## State: one file per cycle
 
@@ -132,19 +132,6 @@ The printed reply is the verdict and reasoning, not the full file. The file is u
 | 0    | Reviewable run (clean, findings, or consult verdict) | `STATUS: clean` / `findings` / `consult-addresses` / `consult-partial` / `consult-not-addressed` |
 | 2    | Unreviewable (hard-fail guard refused, target missing, LSP gate refused) | `STATUS: unreviewable` |
 | 3    | Engine error, retryable | `STATUS: model_error` |
-
-## Eval suite
-
-Lives under `eval/`. Plain pytest, uv-managed. Routes through the deployed agent so we exercise the production invocation path, not a direct model call.
-
-```sh
-cd eval
-uv sync
-uv run pytest                  # offline tests only (free)
-uv run pytest -m live          # invokes the live agent (costs real model requests)
-```
-
-See `eval/README.md` for layout, design, and the baseline-recording flow.
 
 ## Development
 
