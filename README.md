@@ -134,6 +134,18 @@ uv run pytest -m live          # invokes the live agent (costs real model reques
 
 See `eval/README.md` for layout, design, and the baseline-recording flow.
 
+## Development
+
+When iterating on the agent prompt locally, be aware that **plugin installs are cached**. Editing `agents/code-ramsay.agent.md` in your clone does not propagate to the installed plugin at `~/.copilot/installed-plugins/_direct/teh-hippo--code-ramsay/` — Copilot CLI keeps using the cached copy until you explicitly refresh.
+
+Three workflows for active development:
+
+1. **Re-install on every change.** `copilot plugin uninstall code-ramsay && copilot plugin install /path/to/local/clone` (works against your local checkout, not the remote).
+2. **Override via personal agents.** Drop the work-in-progress file at `~/.copilot/agents/code-ramsay.agent.md`; Copilot CLI prefers user-scoped agents over plugin-scoped, so your edits win immediately. Remove it when you're done.
+3. **Pull from remote.** `copilot plugin update code-ramsay` after pushing — for testing what others will see.
+
+Run `./scripts/check-pii.sh` before any push. It greps for known leakage patterns (developer paths, prior-fixture names, etc.) and exits non-zero if it finds anything.
+
 ## License
 
 MIT. See `LICENSE`.
