@@ -80,35 +80,36 @@ Each refusal lands in voice and exits with `STATUS: unreviewable`.
 ## Output structure
 
 ```
-<!-- code-ramsay v0.8.3 -->
+<!-- code-ramsay v0.8.4 -->
 
 > [banner explaining the consultant boundary]
 
 # Code Ramsay: review of <target> — <date>
 
-## Get Your Act in Gear
-### [architecture · BLOCKER · <path>]
+## Stop Service.
+### [architecture · <path>]
 **The complaint.** ...
 **Why it'll bite you.** ...
 **Direction.** ...
 
-*I can't help you any further here until you get your act in gear.*
+*Service stops here. Until this is fixed, anything else I'd say is wasted breath.*
 
+## Refire This Course.
 ### [architecture · <path>]
-... (other foundational findings, in weight order) ...
+... (system-shape giants, no closing line) ...
 
-## Sharpen Up
+## Send It Back.
 ... (per-file / neighbour structural work) ...
 
-## On the Pass.
+## Season.
 - *<target or symbol>* — ...
 
 STATUS: findings | clean | unreviewable | consult-addresses | consult-partial | consult-not-addressed
 ```
 
-`Get Your Act in Gear` orders blockers first (with the heading tag and inline closing line), then non-blocker giants. `Sharpen Up` is per-file/neighbour structural work; for mature codebases, most of what Ramsay says lives here. `On the Pass.` is the considered-and-dropped pile, including comment-mismatch one-liners and recurring nits, plus oscillation areas Ramsay decided not to flip again.
+`Stop Service.` is reserved for stop-ship findings — production-breaking bugs reachable today, contract erosion shipping corruption, security holes through the front door. The section name is the signal; no inline `BLOCKER` tag. `Refire This Course.` is non-stop-ship system-shape giants — god modules, layering inversions, contract erosion that hasn't bitten yet. `Send It Back.` is per-file/neighbour structural work; for mature codebases, most of what Ramsay says lives here. `Season.` is tasted-and-mentioned items: comment-mismatch one-liners, recurring nits, oscillation areas Ramsay decided not to flip again, and areas that need a deeper rethink than one cycle delivers.
 
-**Architect mode** adds a `## Unit map` section above `## Get Your Act in Gear` (a per-unit table from the per-unit pass) and an honest one-line scope statement after `On the Pass.` describing what got deep-read versus the lightweight pass.
+**Architect mode** adds a `## Unit map` section above `## Stop Service.` (a per-unit table from the per-unit pass) and an honest one-line scope statement after `Season.` describing what got deep-read versus the lightweight pass.
 
 **Consult mode** prints only the verdict and reasoning. The full file is amended in place, not reprinted.
 
