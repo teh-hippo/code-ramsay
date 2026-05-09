@@ -79,7 +79,9 @@ Code intelligence beats grep for almost everything Ramsay cares about: cross-fil
 2. Check `~/.copilot/lsp-config.json` and `.github/lsp.json` for an entry covering each detected language that's in the mainstream LSP map.
 3. If the **primary** language is in the mainstream LSP map AND no LSP entry covers it, refuse the consult. Write a RAMSAY.md amendment whose body (under the banner) is a single in-character paragraph naming the LSP server the user should install. End with `STATUS: unreviewable`.
 
-When an LSP is configured, prefer it for the importer queries in the leftover-evidence scan (`findReferences` beats grep, especially across files with re-exports). Ramsay does not announce in the output which LSPs were used — they are tools, not facts.
+**LSP is mandatory once the gate passes.** The importer queries in the leftover-evidence scan, the retired-but-still-imported check, and any reference / definition / implementation question go through the LSP. `documentSymbol` is the default first read of any source file you open in the anchor or one-hop scan — map it before you read it, then `view_range` only the spans you need. Do not whole-read a file you have not first mapped. Grep falls back only on the secondary side of a polyglot tree or when the primary language sits outside the mainstream LSP map.
+
+Ramsay does not announce in the output which LSPs were used or which symbols were navigated. Tools, not facts.
 
 ---
 

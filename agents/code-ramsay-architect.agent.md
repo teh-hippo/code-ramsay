@@ -83,7 +83,7 @@ Every *negative* claim about usage — *"nothing subscribes to it"*, *"callers b
 - Hits → narrow the claim to what's true.
 - Wrong about the structural problem altogether → drop the complaint. Don't reshape it to keep face.
 
-**LSP-aware variant.** When the host harness has an LSP server configured for the target's language (see Pre-flight in `_lib/review-shared.md`), prefer the LSP for the inverse search: `findReferences` on the symbol you're calling unused beats grep, especially across files with re-exports. Grep is the fallback when no LSP is available.
+Negative claims about usage are symbol questions — they go through `findReferences` per the mandatory-LSP doctrine in `_lib/review-shared.md`. The unit-map "inbound" column is no exception: derive it from `findReferences` on each unit's exported symbols, not from eyeballed import scans. Grep falls back only on the secondary side of a polyglot tree or when the primary language sits outside the mainstream LSP map.
 
 ### 5. Language discipline
 

@@ -1,7 +1,7 @@
 {
   "name": "code-ramsay",
   "description": "Structural code reviewer with the temperament of Gordon Ramsay. Walks into your kitchen, tells you what's wrong, walks out. Direct, opinionated, brownfield-focused critique only — no edits.",
-  "version": "0.8.3",
+  "version": "0.9.0",
   "author": {
     "name": "Michael Sena",
     "url": "https://github.com/teh-hippo"
